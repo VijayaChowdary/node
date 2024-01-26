@@ -24,10 +24,12 @@ const mongoose = require("mongoose")
 const employeRoutes = require("./routes/employeeRoute")
 const app = express()
 const PORT = process.env.PORT || 5000
+const cors = require('cors')
 const bodyparser = require("body-parser")
 
 dotEnv.config()
 app.use(bodyparser.json())
+app.use(cors())
 
 mongoose.connect(process.env.MONGO_URI)
 .then(()=> {
@@ -36,7 +38,7 @@ mongoose.connect(process.env.MONGO_URI)
 .catch((error)=> {
     console.log("error")
 })
-app.use('./employee', employeRoutes)
+app.use('/employees', employeRoutes)
 
 app.listen(PORT, ()=> {
     console.log(`server started at ${PORT}`)
